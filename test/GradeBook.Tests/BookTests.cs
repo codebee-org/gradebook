@@ -10,8 +10,8 @@ namespace GradeBook.Tests
         {
             //arrange
             var book = new InMemoryBook("C sharp in depth");
-            var grade1 = book.AddGrade(1.0);
-            var grade2 = book.AddGrade(100.0);
+            var grade1 = 1.0;
+            var grade2 = 100.0;
             //act
             var result = book.GetStatistics();
 

@@ -4,9 +4,10 @@ using System.IO;
 
 namespace GradeBook
 {
-    public delegate void GradeAddedDelegate(object sender, EventArgs args); // delegate should be in it's own file, but he's saving us time
-    
-    public class NamedObject : Object // again, can have own class file for this but leaving for now for learning
+    // delegate should be in it's own file, but he's saving us time
+    public delegate void GradeAddedDelegate(object sender, EventArgs args); 
+    // again, can have own class file for this but leaving for now for learning
+    public class NamedObject : Object 
     {
         public NamedObject(string name)
         {
@@ -17,6 +18,11 @@ namespace GradeBook
         {
             get;
             set;
+        }
+
+        public string Category
+        {
+            get;
         }
     }
     public interface IBook
@@ -30,7 +36,6 @@ namespace GradeBook
     {
         public Book(string name) : base(name)
         {
-            // ...
         }
         public abstract event GradeAddedDelegate GradeAdded;
         public abstract void AddGrade(double grade);
@@ -40,8 +45,9 @@ namespace GradeBook
     {
         public DiskBook(string name) : base(name)
         {
+            Name = name;
         }
-
+        
         public override event GradeAddedDelegate GradeAdded;
 
         public override void AddGrade(double grade)

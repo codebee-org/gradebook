@@ -7,11 +7,9 @@ namespace GradeBook
     {
         static void Main(string[] args)
         {
-            IBook book = new InMemoryBook("C sharp in depth");
+            IBook book = new DiskBook("C sharp in depth");
             book.GradeAdded += OnGradeAdded;
-
             EnterGrades(book);
-
             /*
             book.AddGrade(89.1);
             book.AddGrade(90.5);
@@ -21,14 +19,12 @@ namespace GradeBook
             //var grades = new List<double>() {3.1, 2.2, 4.4};
             */
             var stats = book.GetStatistics();
-
+            
             Console.WriteLine($"Book name is {book.Name}");
             Console.WriteLine($"Maximum is {stats.High}");
             Console.WriteLine($"Minimum is {stats.Low}");
             Console.WriteLine($"Grade averages {stats.Average:N2}");
             Console.WriteLine($"The letter grade is {stats.Letter}");
-            Console.WriteLine($"book type {book.GetType()}");
-            //Console.WriteLine($"The book category is {}")
         }
 
         private static void EnterGrades(IBook book)
