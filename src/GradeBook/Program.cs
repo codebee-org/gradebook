@@ -7,36 +7,11 @@ namespace GradeBook
     {
         static void Main(string[] args)
         {
-            var book = new Book("C sharp in depth");
+            IBook book = new InMemoryBook("C sharp in depth");
+            book.GradeAdded += OnGradeAdded;
 
-            while(true)
-            {
-                Console.WriteLine("Enter grade, q to quit: ");
-                var input = Console.ReadLine();
-                
-                if(input == "q")
-                {
-                    break;
-                }
-                // exception handling in C#, put in the catches you know you can deal with
-                try
-                {
-                    var grade = double.Parse(input);
-                    book.AddGrade(grade);    
-                }
-                catch(ArgumentException ex) //this catches everything, which isn't what you want
-                {
-                    System.Console.WriteLine(ex.Message);
-                }
-                catch(FormatException ex)
-                {
-                    System.Console.WriteLine(ex.Message);
-                }
-                finally // always executes to clean up close file, etc.
-                {
-                    System.Console.WriteLine("**");
-                }
-            }
+            EnterGrades(book);
+
             /*
             book.AddGrade(89.1);
             book.AddGrade(90.5);
@@ -46,11 +21,52 @@ namespace GradeBook
             //var grades = new List<double>() {3.1, 2.2, 4.4};
             */
             var stats = book.GetStatistics();
-            
+
+            Console.WriteLine($"Book name is {book.Name}");
             Console.WriteLine($"Maximum is {stats.High}");
             Console.WriteLine($"Minimum is {stats.Low}");
             Console.WriteLine($"Grade averages {stats.Average:N2}");
             Console.WriteLine($"The letter grade is {stats.Letter}");
+            Console.WriteLine($"book type {book.GetType()}");
+            //Console.WriteLine($"The book category is {}")
+        }
+
+        private static void EnterGrades(IBook book)
+        {
+            while (true)
+            {
+                Console.WriteLine("Enter grade, q to quit: ");
+                var input = Console.ReadLine();
+
+                if (input == "q")
+                {
+                    break;
+                }
+                // exception handling in C#, put in the catches you know you can deal with
+                try
+                {
+                    var grade = double.Parse(input);
+                    book.AddGrade(grade);
+                    // ... event will go here 
+                }
+                catch (ArgumentException ex) //this catches everything, which isn't what you want
+                {
+                    System.Console.WriteLine(ex.Message);
+                }
+                catch (FormatException ex)
+                {
+                    System.Console.WriteLine(ex.Message);
+                }
+                finally // always executes to clean up close file, etc.
+                {
+                    System.Console.WriteLine("**");
+                }
+            }
+        }
+
+        static void OnGradeAdded(object sender, EventArgs e)
+        {
+            System.Console.WriteLine("A grade was added");
         }
     }
 }
